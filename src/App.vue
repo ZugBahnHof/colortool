@@ -15,12 +15,15 @@ export default {
 </script>
 
 <style>
+@import "../node_modules/normalizecss/normalize.css";
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto Mono, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #ffffff;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 </style>
