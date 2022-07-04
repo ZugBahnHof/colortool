@@ -4,13 +4,13 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ColorWindow from './components/ColorWindow.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    ColorWindow
+  },
 }
 </script>
 
