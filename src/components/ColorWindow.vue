@@ -1,11 +1,14 @@
 <template>
-  <div id="color-window" :style="{backgroundColor: color}">
-    rgba({{ red }}, {{ green }}, {{ blue }}, {{ alpha }})
+  <div id="color-window" :style="{backgroundColor: color, color:textColor}">
+
+    back: rgba({{ red }}, {{ green }}, {{ blue }}, {{ alpha }})
+
+    text: {{ textColor }}
+    <input type="text" @input="transform" v-model="colorString">
     <color-slider @input="(e) => {sliderInput(e, 'red')}"  v-model="red"></color-slider>
     <color-slider @input="(e) => {sliderInput(e, 'green')}"  v-model="green"></color-slider>
     <color-slider @input="(e) => {sliderInput(e, 'blue')}"  v-model="blue"></color-slider>
     <color-slider @input="(e) => {sliderInput(e, 'alpha')}"  v-model="alpha" is-alpha></color-slider>
-    <input type="text" @input="transform" v-model="colorString">
   </div>
 </template>
 
@@ -32,9 +35,12 @@ export default {
     }
   },
   computed: {
-    hump() {
+    changeColorString() {
       if (this.color.valpha === 1) return this.color.hex().toString();
       return this.color.hexa().toString();
+    },
+    textColor() {
+      return this.color.luminosity() > 0.5 ? "black" : "white";
     }
   },
   methods: {
@@ -42,12 +48,11 @@ export default {
       let c = ColorString.get(event.target.value);
       if (c !== null) {
         this.color = Color(event.target.value);
+        this.red = this.color.red();
+        this.green = this.color.green();
+        this.blue = this.color.blue();
+        this.alpha = this.color.alpha();
       }
-      // let str = event.target.value.toUpperCase();
-      // str = str.replace(/[^A-F0-9]+/gi, "")
-      // str = str.substr(0, 9);
-      // str = "#" + str;
-      // this.colorString = str;
     },
     randomColor() {
       return ""
@@ -73,8 +78,8 @@ export default {
           break;
       }
 
-      this.colorString = this.hump;
-    }
+      this.colorString = this.changeColorString;
+    },
   }
 }
 </script>
@@ -95,8 +100,9 @@ input[type=text] {
   margin: 3rem;
   background-color: transparent;
   border: none;
+  max-width: calc(100vw - 6rem);;
 }
-input:focus {
+input[type=text]:focus {
   outline: none;
 }
 </style>
