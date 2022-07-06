@@ -16,3 +16,9 @@ export default {
          @input="$emit('update:modelValue', $event.target.value)"
   />
 </template>
+
+<style scoped>
+input {
+  transform: rotate(270deg);
+}
+</style>

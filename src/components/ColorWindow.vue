@@ -5,10 +5,16 @@
 
     text: {{ textColor }}
     <input type="text" @input="transform" v-model="colorString">
-    <color-slider @input="(e) => {sliderInput(e, 'red')}"  v-model="red"></color-slider>
-    <color-slider @input="(e) => {sliderInput(e, 'green')}"  v-model="green"></color-slider>
-    <color-slider @input="(e) => {sliderInput(e, 'blue')}"  v-model="blue"></color-slider>
-    <color-slider @input="(e) => {sliderInput(e, 'alpha')}"  v-model="alpha" is-alpha></color-slider>
+    <div id="sliders">
+      Red
+      <color-slider @input="(e) => {sliderInput(e, 'red')}" v-model="red"></color-slider>
+      Green
+      <color-slider @input="(e) => {sliderInput(e, 'green')}" v-model="green"></color-slider>
+      Blue
+      <color-slider @input="(e) => {sliderInput(e, 'blue')}" v-model="blue"></color-slider>
+      Alpha
+      <color-slider @input="(e) => {sliderInput(e, 'alpha')}" v-model="alpha" is-alpha></color-slider>
+    </div>
   </div>
 </template>
 
