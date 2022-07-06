@@ -1,5 +1,5 @@
 <template>
-  <div id="color-window" :style="{backgroundColor: color, color:textColor}">
+  <div id="color-window" :style="{backgroundColor: color, color: textColor}">
 
     back: rgba({{ red }}, {{ green }}, {{ blue }}, {{ alpha }})
 
@@ -20,6 +20,7 @@
 
 <script>
 import ColorSlider from "@/components/ColorSlider";
+
 const Color = require("color");
 const ColorString = require('color-string');
 
@@ -108,6 +109,7 @@ input[type=text] {
   border: none;
   max-width: calc(100vw - 6rem);;
 }
+
 input[type=text]:focus {
   outline: none;
 }
