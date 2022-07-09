@@ -1,5 +1,5 @@
 <template>
-<!--  <img alt="Vue logo" src="./assets/logo.png">-->
+  <!--  <img alt="Vue logo" src="./assets/logo.png">-->
   <ColorWindow msg="Welcome to Your Vue.js App"/>
 </template>
 
@@ -16,6 +16,7 @@ export default {
 
 <style>
 @import "../node_modules/normalizecss/normalize.css";
+
 #app {
   font-family: Roboto Mono, monospace;
   -webkit-font-smoothing: antialiased;
