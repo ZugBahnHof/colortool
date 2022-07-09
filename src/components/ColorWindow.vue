@@ -31,7 +31,17 @@ export default {
     msg: String
   },
   data() {
-    let tempColor = Color("#da1f3d");
+    let hash = window.location.hash;
+    let hashColor = Color(hash);
+    let tempColor;
+
+    if (hash && hashColor) {
+      tempColor = hashColor;
+    } else {
+      tempColor = Color("#da1f3d");
+    }
+    window.location.hash = tempColor.hexa().toString();
+
     return {
       color: tempColor,
       colorString: tempColor.hexa().toString(),
@@ -59,6 +69,7 @@ export default {
         this.green = this.color.green();
         this.blue = this.color.blue();
         this.alpha = this.color.alpha();
+        window.location.hash = this.changeColorString;
       }
     },
     randomColor() {
@@ -85,6 +96,7 @@ export default {
           break;
       }
 
+      window.location.hash = this.changeColorString;
       this.colorString = this.changeColorString;
     },
   }
