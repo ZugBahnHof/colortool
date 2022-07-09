@@ -30,13 +30,19 @@ export default {
   props: {
     msg: String
   },
+  mounted() {
+    window.addEventListener("hashchange", this.handleHashChange)
+  },
+  unmounted() {
+    window.removeEventListener("hashchange", this.handleHashChange)
+  },
   data() {
     let hash = window.location.hash;
-    let hashColor = Color(hash);
+    let hashColor = ColorString.get(hash);
     let tempColor;
 
-    if (hash && hashColor) {
-      tempColor = hashColor;
+    if (hash && hashColor !== null) {
+      tempColor = Color(hash);
     } else {
       tempColor = Color("#da1f3d");
     }
@@ -71,6 +77,19 @@ export default {
         this.alpha = this.color.alpha();
         window.location.hash = this.changeColorString;
       }
+    },
+    handleHashChange() {
+      console.log("Hash changed");
+      let hash = window.location.hash || this.colorString || "#da1f3d";
+      let c = ColorString.get(hash);
+      if (c !== null) {
+        this.color = Color(hash);
+        this.red = this.color.red();
+        this.green = this.color.green();
+        this.blue = this.color.blue();
+        this.alpha = this.color.alpha();
+      }
+      window.location.hash = this.changeColorString;
     },
     randomColor() {
       return ""
