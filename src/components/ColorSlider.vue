@@ -19,6 +19,11 @@ export default {
 
 <style scoped>
 input {
+  --width: 30vmin;
   transform: rotate(270deg);
+  width: var(--width);
+  height: 1vmin;
+  margin-inline: calc(-1 * var(--width));
+  margin-block: calc(var(--width) / 2);
 }
 </style>
