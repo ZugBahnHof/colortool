@@ -6,13 +6,13 @@
     text: {{ textColor }}
     <input type="text" @input="transform" v-model="colorString">
     <div id="sliders">
-      Red
+      <span>Red</span>
       <color-slider @input="(e) => {sliderInput(e, 'red')}" v-model="red"></color-slider>
-      Green
+      <span>Green</span>
       <color-slider @input="(e) => {sliderInput(e, 'green')}" v-model="green"></color-slider>
-      Blue
+      <span>Blue</span>
       <color-slider @input="(e) => {sliderInput(e, 'blue')}" v-model="blue"></color-slider>
-      Alpha
+      <span>Alpha</span>
       <color-slider @input="(e) => {sliderInput(e, 'alpha')}" v-model="alpha" is-alpha></color-slider>
     </div>
   </div>
@@ -104,7 +104,7 @@ export default {
 input[type=text] {
   font-size: 15vmin;
   line-height: 0.9;
-  margin: 3rem;
+  margin: 2rem;
   background-color: transparent;
   border: none;
   max-width: calc(100vw - 6rem);;
@@ -112,5 +112,14 @@ input[type=text] {
 
 input[type=text]:focus {
   outline: none;
+}
+#sliders {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-template-rows: repeat(2, auto);
+  place-items: center;
+  grid-auto-flow: column;
+  gap: 1rem;
+  margin-left: 2rem;
 }
 </style>
