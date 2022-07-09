@@ -37,7 +37,7 @@ export default {
     window.removeEventListener("hashchange", this.handleHashChange)
   },
   data() {
-    let hash = window.location.hash;
+    let hash = window.location.hash.replace("%23", "");
     let hashColor = ColorString.get(hash);
     let tempColor;
 
@@ -80,7 +80,7 @@ export default {
     },
     handleHashChange() {
       console.log("Hash changed");
-      let hash = window.location.hash || this.colorString || "#da1f3d";
+      let hash = window.location.hash.replace("%23", "") || this.colorString || "#da1f3d";
       let c = ColorString.get(hash);
       if (c !== null) {
         this.color = Color(hash);
