@@ -3,7 +3,8 @@
     <ShortName>ColorTool</ShortName>
     <Description>Manipulate color</Description>
     <InputEncoding>UTF-8</InputEncoding>
-    <Image width="16" height="16" type="image/x-icon">http://localhost:8080/favicon.ico</Image>
-    <Url type="text/html" template="http://localhost:8080/#{searchTerms}"/>
-    <moz:SearchForm>http://localhost:8080/</moz:SearchForm>
+    <Image width="271" height="271" type="image/x-image">https://color-search.netlify.app/logo.ico</Image>
+    <Image width="64" height="64" type="image/svg">https://color-search.netlify.app/logo.svg</Image>
+    <Url type="text/html" template="https://color-search.netlify.app/#{searchTerms}"/>
+    <moz:SearchForm>https://color-search.netlify.app/</moz:SearchForm>
 </OpenSearchDescription>

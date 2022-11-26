@@ -18,7 +18,7 @@ export default {
 @import "../node_modules/normalizecss/normalize.css";
 
 #app {
-  font-family: Roboto Mono, monospace;
+  font-family: "JetBrains Mono", "Roboto Mono", Ubuntu Mono, "Noto Sans Mono", Monospaced, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
