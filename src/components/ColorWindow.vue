@@ -5,15 +5,35 @@
 
     text: {{ textColor }}
     <input type="text" @input="transform" v-model="colorString">
-    <div id="sliders">
-      <span>Red</span>
-      <color-slider @input="(e) => {sliderInput(e, 'red')}" v-model="red"></color-slider>
-      <span>Green</span>
-      <color-slider @input="(e) => {sliderInput(e, 'green')}" v-model="green"></color-slider>
-      <span>Blue</span>
-      <color-slider @input="(e) => {sliderInput(e, 'blue')}" v-model="blue"></color-slider>
-      <span>Alpha</span>
-      <color-slider @input="(e) => {sliderInput(e, 'alpha')}" v-model="alpha" is-alpha></color-slider>
+    <div id="mode-switcher">
+      <input type="radio" name="mode" value="hex" id="hex" v-model="mode">
+      <label for="hex">HEX</label>
+      <input type="radio" name="mode" value="hsl" id="hsl" v-model="mode">
+      <label for="hsl">HSL</label>
+    </div>
+    <div class="slider-box">
+      <input type="hidden" name="mode" :value="mode">
+      <div class="sliders sliders-hex">
+        <span>Red</span>
+        <color-slider @input="(e) => {sliderInput(e, 'red')}" v-model="red"></color-slider>
+        <span>Green</span>
+        <color-slider @input="(e) => {sliderInput(e, 'green')}" v-model="green"></color-slider>
+        <span>Blue</span>
+        <color-slider @input="(e) => {sliderInput(e, 'blue')}" v-model="blue"></color-slider>
+        <span>Alpha</span>
+        <color-slider @input="(e) => {sliderInput(e, 'alpha')}" v-model="alpha" mode="alpha"></color-slider>
+      </div>
+      <div class="sliders sliders-hsl">
+        <span>Hue</span>
+        <color-slider @input="(e) => {sliderInput(e, 'hue')}" v-model="hue" mode="hue"></color-slider>
+        <span>Sat.</span>
+        <color-slider @input="(e) => {sliderInput(e, 'saturation')}" v-model="saturation"
+                      mode="satlight"></color-slider>
+        <span>Light</span>
+        <color-slider @input="(e) => {sliderInput(e, 'lightness')}" v-model="lightness" mode="satlight"></color-slider>
+        <span>Alpha</span>
+        <color-slider @input="(e) => {sliderInput(e, 'alpha')}" v-model="alpha" mode="alpha"></color-slider>
+      </div>
     </div>
   </div>
 </template>
@@ -54,7 +74,12 @@ export default {
       red: tempColor.red(),
       green: tempColor.green(),
       blue: tempColor.green(),
+      hue: tempColor.hue(),
+      saturation: tempColor.saturationl(),
+      lightness: tempColor.lightness(),
       alpha: tempColor.alpha(),
+      mode: "hex",
+      hashTimer: null,
     }
   },
   computed: {
@@ -67,6 +92,14 @@ export default {
     }
   },
   methods: {
+    setHash() {
+      if (!this.hashTimer) {
+        this.hashTimer = setTimeout(() => {
+          this.hashTimer = null;
+          window.location.hash = this.changeColorString;
+        }, 500);
+      }
+    },
     transform(event) {
       let c = ColorString.get(event.target.value);
       if (c !== null) {
@@ -75,7 +108,10 @@ export default {
         this.green = this.color.green();
         this.blue = this.color.blue();
         this.alpha = this.color.alpha();
-        window.location.hash = this.changeColorString;
+        this.hue = this.color.hue();
+        this.saturation = this.color.saturationl();
+        this.lightness = this.color.lightness();
+        this.setHash();
       }
     },
     handleHashChange() {
@@ -88,8 +124,11 @@ export default {
         this.green = this.color.green();
         this.blue = this.color.blue();
         this.alpha = this.color.alpha();
+        this.hue = this.color.hue();
+        this.saturation = this.color.saturationl();
+        this.lightness = this.color.lightness();
       }
-      window.location.hash = this.changeColorString;
+      this.setHash();
     },
     randomColor() {
       return ""
@@ -113,9 +152,21 @@ export default {
         case "blue":
           if (0 <= value <= 255) this.color = this.color.blue(value);
           break;
+
+        case "hue":
+          if (0 <= value <= 360) this.color = this.color.hue(value);
+          break;
+
+        case "saturation":
+          if (0 <= value <= 100) this.color = this.color.saturationl(value);
+          break;
+
+        case "lightness":
+          if (0 <= value <= 100) this.color = this.color.lightness(value);
+          break;
       }
 
-      window.location.hash = this.changeColorString;
+      this.setHash();
       this.colorString = this.changeColorString;
     },
   }
@@ -123,7 +174,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 #color-window {
   height: 100vh;
   width: 100vw;
@@ -144,13 +195,49 @@ input[type=text] {
 input[type=text]:focus {
   outline: none;
 }
-#sliders {
+
+.sliders {
   display: grid;
   grid-template-columns: repeat(4, auto);
   grid-template-rows: repeat(2, auto);
   place-items: center;
   grid-auto-flow: column;
   gap: 1rem;
+  transition: all 0.5s ease-in-out;
+}
+
+.slider-box {
+  overflow: hidden;
+  display: flex;
   margin-left: 2rem;
 }
+
+#mode-switcher {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 2rem;
+  gap: 1em;
+}
+
+input[name=mode][value=hex] {
+  & ~ .sliders-hsl {
+    transform: translate(100%, 0);
+  }
+
+  & ~ .sliders-hex {
+    transform: translate(0, 0);
+  }
+}
+
+input[name=mode][value=hsl] {
+  & ~ .sliders {
+    transform: translate(-200%, 0);
+  }
+
+  & ~ .sliders-hsl {
+    transform: translate(-100%, 0);
+  }
+}
+
 </style>
