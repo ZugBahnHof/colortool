@@ -1,17 +1,34 @@
 <script>
 export default {
-  props: {'modelValue': [String, Number], "isAlpha": Boolean},
-  emits: ['update:modelValue']
+  props: {'modelValue': [String, Number], mode: String},
+  emits: ['update:modelValue'],
+  computed: {
+    max() {
+      switch (this.mode) {
+        case "alpha":
+          return 1;
+        case "hue":
+          return 360;
+        case "satlight":
+          return 100;
+        default:
+          return 255;
+      }
+    },
+    step() {
+      switch (this.mode) {
+        case "alpha":
+          return 0.00390625;
+        default:
+          return 1;
+      }
+    },
+  },
 }
 </script>
 
 <template>
-  <input v-if="!isAlpha" type="range" min="0" max="255"
-      :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
-  />
-
-  <input v-else type="range" min="0" max="1" step="0.00390625"
+  <input type="range" min="0" :max="max" :step="step"
          :value="modelValue"
          @input="$emit('update:modelValue', $event.target.value)"
   />
